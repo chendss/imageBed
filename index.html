@@ -6,26 +6,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 		<title>阿里巴巴稳定图片外链服务</title>
-		<meta
-			name="keywords"
-			content="淘宝图床,图片外链,稳定图床,免费图床,网络图片,图片库,相册,网络相册,批量上传,批量生成"
-		/>
-		<meta
-			name="description"
-			itemprop="description"
-			content="永久免费图床，稳定图片外链；支持批量上传,即时预览,不限制流量,不限制外链数,永久保存,阿里巴巴图片服务器,全网CDN图床,高速稳定,支持网页,手机上传,无需插件,支持JPG,GIF,PNG等文件格式,微博图床,土豆是个好图床"
-		/>
 		<link rel="stylesheet" href="./css/bootstrap.min.css" />
 		<link rel="stylesheet" href="./css/prettify.css" />
 		<link rel="stylesheet" href="./css/main.css" />
 		<script rel="stylesheet" src="./js/layer.js"></script>
+		<script src="./js/jq.js" type="text/javascript"></script>
+		<script src="./js/bootstrap.min.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span12 header text-center">
 					<p class="title1">© 免费图床</p>
-					<p class="title2">阿里巴巴图片外链服务 稳定不掉线 免费使用</p>
+					<p class="title2">少爷的图床</p>
 				</div>
 				<div class="col-md-8 col-xs-10 jumbotron" style="margin:auto;">
 					<div class="mselector">
@@ -86,11 +79,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="./js/jq.js" type="text/javascript"></script>
-		<script
-			src="./js/bootstrap.min.js"
-			type="text/javascript"
-		></script>
+
 		<script type="text/javascript">
 			// var url = 'https://api.uomg.com/api/image.ali'
 			var url = 'https://api.169740.com/api/image.ali'
@@ -115,7 +104,7 @@
 			function file_upload(files) {
 				if (files.length == 0) return alert('请选择图片文件！')
 				for (var j = 0, len = files.length; j < len; j++) {
-					console.log('文件上传流',files[j])
+					console.log('文件上传流', files[j])
 					let imageData = new FormData()
 					imageData.append('file', 'multipart')
 					imageData.append('Filedata', files[j])
@@ -168,10 +157,10 @@
 									'</code></div>'
 							)
 						} else {
-              layer.open({
-									title: '错误',
-									content: '第' + j + '个图片上传失败',
-								})
+							layer.open({
+								title: '错误',
+								content: '第' + j + '个图片上传失败',
+							})
 						}
 						console.log(result)
 					})
