@@ -1,0 +1,57 @@
+@import "./the.scss";
+@import "./collect.scss";
+@import "./loading.scss";
+
+#__dashao {
+  margin: 0;
+
+  iframe {
+    // display: none;
+  }
+
+  .bar_empty {
+    @include bar_empty;
+  }
+
+  .jquery-modal {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    z-index        : 99;
+    width          : 100vw;
+    height         : 100vh;
+  }
+
+  #footer,
+  .footer,
+  footer {
+    display: none;
+  }
+
+  .none {
+    opacity   : 0;
+    height    : 0;
+    width     : 0;
+    z-index   : -10;
+    visibility: hidden;
+    display   : none !important;
+  }
+
+  #clearBtn {
+    position: fixed;
+    left    : 50px;
+    top     : 50px;
+  }
+
+  .empty_box {
+    @include empty_element();
+  }
+
+  body {
+    // filter: grayscale(0);
+  }
+}
+
+.am*:not(svg, i, use, path) {
+  transition: all 0.3s;
+}

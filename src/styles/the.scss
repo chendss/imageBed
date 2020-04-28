@@ -1,0 +1,226 @@
+@import './basic.scss'; // TODO:
+
+#__dashao {
+  *[class^="cy_"] {
+    box-sizing: border-box;
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+  }
+
+  * {
+
+    &::selection {
+      background: $cy_cyColor_brand_1;
+      color     : #fff;
+    }
+
+    &::-webkit-selection {
+      background: $cy_cyColor_brand_1;
+      color     : #fff;
+    }
+
+    &::-moz-selection {
+      background: $cy_cyColor_brand_1;
+      color     : #fff;
+    }
+  }
+
+  .cy_btn {
+    min-width  : 50px;
+    white-space: nowrap;
+    @include cy_cyFont_base();
+    padding        : 0 16px;
+    align-items    : center;
+    justify-content: center;
+    cursor         : pointer;
+    border-radius  : 2*$cy_cyHd;
+    height         : 16*$cy_cyHd;
+    display        : inline-flex;
+    color          : $cy_cyColor_neutral_2;
+    background     : $cy_cyColor_neutral_8;
+    border         : 1px solid $cy_cyColor_neutral_5;
+
+    &:hover {
+      color : $cy_cyColor_brand_1;
+      border: 1px solid $cy_cyColor_brand_1;
+    }
+
+    &[d="true"] {
+      cursor    : not-allowed;
+      color     : $cy_cyColor_neutral_4;
+      background: $cy_cyColor_neutral_7;
+      border    : 1px solid $cy_cyColor_neutral_5;
+    }
+
+    &[type="p"] {
+      background: $cy_cyColor_brand_1;
+      color     : $cy_cyColor_neutral_8;
+      border    : 0;
+
+      &:hover {
+        background: $cy_cyColor_brand_5;
+      }
+
+      &[d="true"] {
+        background: $cy_cyColor_neutral_5;
+      }
+    }
+
+    &[size="sm"] {
+      padding: 0 8px;
+      height : 12*$cy_cyHd;
+
+    }
+  }
+
+  .cy_input {
+    border-radius: 4px;
+    height       : 16*$cy_cyHd;
+    outline-color: transparent;
+    padding      : 0 6*$cy_cyHd;
+    width        : 112*$cy_cyHd;
+    color        : $cy_cyColor_neutral_2;
+    background   : $cy_cyColor_neutral_8;
+    border       : 1px solid $cy_cyColor_neutral_5;
+
+    &::placeholder {
+      margin-left: 6*$cy_cyHd;
+      color      : rgba(0, 0, 0, 0.15);
+    }
+
+    &:focus {
+      border-color: $cy_cyColor_neutral_5;
+    }
+
+    &:hover {
+      border-color: $cy_cyColor_neutral_4;
+    }
+  }
+
+  .cy_tag {
+    @include cy_cyFont_caption();
+    height         : 20px;
+    align-items    : center;
+    justify-content: center;
+    cursor         : pointer;
+    border-radius  : 2*$cy_cyHd;
+    display        : inline-flex;
+    padding        : 0 4*$cy_cyHd;
+    color          : $cy_cyColor_neutral_2;
+    background     : $cy_cyColor_neutral_8;
+    border         : $cy_cyBorder_width_sm solid $cy_cyColor_neutral_5;
+
+    &[size="sm"] {
+      font-size: 12px;
+    }
+
+    &:hover {
+      color : $cy_cyColor_brand_1;
+      border: $cy_cyBorder_width_sm solid $cy_cyColor_brand_1;
+    }
+
+    &[type="p"] {
+      background: $cy_cyColor_brand_1;
+      color     : $cy_cyColor_neutral_8;
+      border    : $cy_cyBorder_width_sm solid $cy_cyColor_brand_1;
+    }
+  }
+
+  .cy_titps {
+    color    : rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+  }
+
+  .cy_label {
+    @include cy_cyFont_base();
+    color       : $cy_cyColor_neutral_1;
+    margin-right: 8*$cy_cyHd;
+
+    &::after {
+      content    : ':';
+      margin-left: 16px;
+    }
+  }
+
+
+  .cy_panel {
+    padding       : 0px;
+    display       : flex;
+    flex-direction: column;
+    border        : 1px solid rgba(0, 0, 0, 0.1);
+
+    .panel_header {
+      font-weight    : 400;
+      height         : 38px;
+      display        : flex;
+      font-size      : 14px;
+      align-items    : center;
+      padding        : 4px 16px;
+      justify-content: flex-start;
+      color          : rgba(0, 0, 0, 0.85);
+      border-bottom  : 1px solid rgba(0, 0, 0, 0.1);
+
+      &[type="main"] {
+        font-size    : 16px;
+        color        : #000;
+        padding      : 8px 16px;
+        height       : max-content;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      }
+
+      .header_title {}
+
+      .header_right {
+        margin-left: auto;
+
+        &[position="left"] {
+          margin-right: auto;
+        }
+      }
+
+      .header_title+.header_right {
+        margin-left: 16px;
+      }
+    }
+
+    .panel_content {
+      padding: 16px;
+
+      .content_row {
+        display    : flex;
+        align-items: center;
+      }
+
+      .content_row+.content_row {
+        margin-top: 8px;
+      }
+    }
+
+    .cy_panel+.cy_panel {
+      margin-top: 12px;
+    }
+
+    &[type="main"] {
+      border: 1px solid rgba(0, 0, 0, 0.25);
+    }
+
+    label {
+      @extend .cy_label;
+    }
+  }
+
+  .cy_tag+.cy_tag {
+    margin-left: 8*$cy_cyHd;
+  }
+
+  .cy_tag+.cy_input,
+  .cy_input+.cy_titps,
+  .cy_input+.cy_btn,
+  .cy_btn+.cy_titps {
+    margin-left: 8*$cy_cyHd;
+  }
+}

@@ -1,0 +1,215 @@
+/*
+  基本要素库   颜色 部分  cy_color_x_x
+*/
+
+//基本单位/Basic Unit，作为各组件size的参考值
+$cy_cyHd: 2px; //TODO:
+
+//边框尺寸/Border Width
+$cy_cyBorder_width_sm: 1px; //TODO:
+$cy_cyBorder_width_lg: $cy_cyHd; //TODO:
+
+// 分割线/Divide
+$cy_cyDivider_height_sm: 1px;
+
+// 图标尺寸/Icon Size
+$cy_cyIcon_size_xxxs: 4 * $cy_cyHd; //TODO:
+$cy_cyIcon_size_xxs : 6 * $cy_cyHd; //TODO:
+$cy_cyIcon_size_xs  : 7 * $cy_cyHd; //TODO:
+$cy_cyIcon_size_sm  : 8 * $cy_cyHd; //TODO:
+$cy_cyIcon_size_md  : 10 * $cy_cyHd; //TODO:
+$cy_cyIcon_size_lg  : 12 * $cy_cyHd; //TODO:
+
+
+//圆点/Circle
+@mixin cy_cyCircle_sm {
+  border    : 1px;
+  box-sizing: border-box;
+  width     : 4 * $cy_cyHd;
+  height    : 4 * $cy_cyHd;
+}
+
+
+
+//投影类型
+@mixin cy_cyShadow_right {
+  box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+@mixin cy_cyShadow_left {
+  box-shadow: -4px 0 8px -4px rgba(0, 0, 0, 0.1);
+}
+
+@mixin cy_cyShadow_down {
+  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.1);
+}
+
+//颜色体系---品牌色/Brand Color
+
+//品牌色，主要组件正常背景（Normal）
+$cy_cyColor_brand_1: #1861F2; //TODO:
+
+//辅助色，脚手架正常背景（Normal）
+$cy_cyColor_brand_2: #00143D; //TODO:
+
+//辅助色，脚手架按下背景（Pessed）
+$cy_cyColor_brand_3: #001B52; //TODO:
+
+//辅助色，主要组件按下背景（Pessed)
+$cy_cyColor_brand_4: #1557D9; //TODO:
+
+//辅助色，主要组件鼠标经过背景（Hover)
+$cy_cyColor_brand_5: #3071F2; //TODO:
+
+//辅助色，主要组件禁用背景（Disabled)
+$cy_cyColor_brand_6: rgba(24, 97, 242, 0.25); //TODO:
+
+//辅助色，弹层鼠标经过背景
+$cy_cyColor_brand_7: rgba(24, 97, 242, 0.1); //TODO:
+
+//辅助色，页面默认背景（Default）
+$cy_cyColor_brand_8: #F5F7Fa; //TODO:
+
+//颜色体系---中性色/Neutral Color
+
+//标题字色
+$cy_cyColor_neutral_1: rgba(0, 0, 0, 0.85); //TODO:
+
+//正文字色；遮罩背景
+$cy_cyColor_neutral_2: rgba(0, 0, 0, 0.65); //TODO:
+
+//描述字色
+$cy_cyColor_neutral_3: rgba(0, 0, 0, 0.45); //TODO:
+
+//禁用字色
+$cy_cyColor_neutral_4: rgba(0, 0, 0, 0.25); //TODO:
+
+//边框色
+$cy_cyColor_neutral_5: rgba(0, 0, 0, 0.15); //TODO:
+
+//分割线色
+$cy_cyColor_neutral_6: rgba(0, 0, 0, 0.1); //TODO:
+
+//组件次要背景
+$cy_cyColor_neutral_7: rgba(0, 0, 0, 0.04); //TODO:
+
+//组件默认背景
+$cy_cyColor_neutral_8: #fff; //TODO:
+//组件次要背景
+$cy_cyColor_neutral_9: rgba(255, 255, 255, 0.85); //TODO:
+//次要字色
+$cy_cyColor_neutral_10: rgba(255, 255, 255, 0.65); //TODO:
+//描述字色
+$cy_cyColor_neutral_11: rgba(255, 255, 255, 0.45); //TODO:
+//禁用字色；占位符（placeholder）
+$cy_cyColor_neutral_12: rgba(255, 255, 255, 0.25); //TODO:
+//边框色
+$cy_cyColor_neutral_13: rgba(255, 255, 255, 0.15); //TODO:
+//组件次要背景；分割线色
+$cy_cyColor_neutral_14: rgba(255, 255, 255, 0.10); //TODO:
+
+//颜色体系---功能色/Function Color
+
+//出错（Error）
+$cy_cyColor_function_1: #E61717; //TODO:
+
+//警告（Warming）
+$cy_cyColor_function_2: #FFBF00; //TODO:
+
+//链接（Link）
+$cy_cyColor_function_3: #1885F2; //TODO:
+
+//成功（Success）
+$cy_cyColor_function_4: #29CC29; //TODO:
+
+//字体体系
+
+//页面标题
+@mixin cy_cyFont_heading($lineHeight: 30px, $fontWeight: 500) {
+  font-weight: $fontWeight;
+  font-size  : 10*$cy_cyHd;
+  line-height: $lineHeight;
+}
+
+//大标题
+@mixin cy_cyFont_title($lineHeight: 24px, $fontWeight: 500) {
+  font-weight: $fontWeight;
+  font-size  : 8*$cy_cyHd;
+  line-height: $lineHeight;
+}
+
+//小标题
+@mixin cy_cyFont_subhead($lineHeight: 22px, $fontWeight: 500) {
+  font-weight: $fontWeight;
+  font-size  : 7*$cy_cyHd;
+  line-height: $lineHeight;
+}
+
+//正文
+@mixin cy_cyFont_base($lineHeight: 22px, $fontWeight: 400) {
+  font-weight: $fontWeight;
+  font-size  : 7*$cy_cyHd;
+  line-height: $lineHeight;
+}
+
+//说明文字
+@mixin cy_cyFont_caption($lineHeight: 18px, $fontWeight: 400) {
+  font-weight: $fontWeight;
+  font-size  : 6*$cy_cyHd;
+  line-height: $lineHeight;
+}
+
+//圆角/Radius
+@mixin cy_cyRadius_sm {
+  border-radius: 2 * $cy_cyHd;
+}
+
+@mixin cy_cyRadius_xs {
+  border-radius: $cy_cyHd;
+}
+
+//隔线/Line
+@mixin cy_cyLine {
+  display   : block;
+  width     : 1px;
+  height    : 7 * $cy_cyHd;
+  background: #ccc;
+}
+
+//隔线/Line-伪类版本
+@mixin cy_cyLine_w($type, $dx: 0) {
+  .base {
+    top        : 0;
+    left       : 0;
+    right      : 0;
+    bottom     : 0;
+    width      : 1px;
+    content    : '';
+    height     : 7 * $cy_cyHd;
+    box-sizing : border-box;
+    border-left: 1px solid #ccc;
+    transform  : translateX($dx * $cy_cyHd);
+  }
+
+  @if $type==before {
+    &::before {
+      @extend .base;
+    }
+  }
+
+  @if $type==after {
+    &::after {
+      @extend .base;
+    }
+  }
+}
+
+$cy_widget: __cy_widget;
+
+.ant-layout-content {
+  background-color: $cy_cyColor_brand_8;
+
+  >div:nth-child(2) {
+    background: none !important;
+  }
+}

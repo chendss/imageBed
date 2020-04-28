@@ -1,0 +1,18 @@
+@mixin empty_element {
+  right     : 0 !important;
+  top       : 0 !important;
+  border    : 0 !important;
+  z-index   : -99 !important;
+  position  : fixed !important;
+  opacity   : 0.001 !important;
+  height    : 0.01px !important;
+  width     : 0.01px !important;
+  background: transparent !important;
+  color     : transparent !important;
+}
+
+@mixin bar_empty {
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+}
