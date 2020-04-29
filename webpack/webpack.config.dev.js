@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const config = require('./config')
 const moduleConfig = require('./module')
 const htmlWebpackPlugin = require('html-webpack-plugin')
-const OpenBrowserPlugin = require('open-browser-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');//打包内容分析
 
 const templateHtmlPlugin = function () {
   return new htmlWebpackPlugin({
@@ -22,12 +22,14 @@ module.exports = {
   watchOptions: config.watchOptions(),
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: `http://localhost:${config.port}` }),
+    new webpack.NamedModulesPlugin(),
+    new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
     templateHtmlPlugin(),
   ],
   module: moduleConfig(process.env.ENV),
   devServer: {
     hot: true,
+    hotOnly: true,
     port: config.port,
     contentBase: path.resolve(__dirname, '../dist/'),
   },

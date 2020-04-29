@@ -135,19 +135,17 @@ module.exports = {
 *   自动打开浏览器
 *   代码修改页面热更新
 
-一个一个来，**自动打开浏览器**，使用 *open-browser-webpack-plugin*插件即可完成
+一个一个来，**自动打开浏览器**
 
 ``` javaScript
 // in webpack.config.dev.js
-const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 module.exports = {
-    ...其他,
-    plugins: [
-        ...其他,
-        new OpenBrowserPlugin({
-            url: `http://localhost:端口` 
-        })
-    ]
+    devServer: {
+        hot: true,
+        hotOnly: true,
+        port: config.port,
+        contentBase: path.resolve(__dirname, '../dist/'),
+    },
 }
 ```
 
@@ -207,7 +205,6 @@ module.exports = {
 const path = require('path')
 const webpack = require('webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin')
-const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 const templateHtmlPlugin = function() {
     return new htmlWebpackPlugin({
@@ -231,9 +228,6 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({
-            url: `http://localhost:3108` 
-        }),
         templateHtmlPlugin(),
     ],
     devServer: {
@@ -298,7 +292,9 @@ module.exports = {
 * sass引擎 - 因为sass以及自成一套体系，几乎可以作为一个新的语言
 * sass-loader - webpack如何解析sass、scss文件就靠这个loader
 
-但是在安装时会遇到安装问题, 如下安装方法即可
+#### sass引擎
+
+这个简单，直接安装就是，但是在安装时会遇到安装问题, 如下安装方法即可
 
 ``` shell
 npm install --save-dev node-sass --registry=https://registry.npm.taobao.org
@@ -331,16 +327,86 @@ module.exports = function() {
 }
 ```
 
-```javaScript
+``` javaScript
 // in webpack.config.dev.js
 const moduleConfig = require('./module')
 
 module.exports = {
-  module: moduleConfig(),
+    module: moduleConfig(),
 }
 ```
 
-这样我们的sass文件就可以被webpack识别，并且在页面生效了
+这样我们的sass文件就可以被webpack识别，并且在页面生效了，那么能不即用**sass**又用**less**呢，当然是可以的，只要两个loader就可以了，（项目里最好不要用两个，为了技术栈统一，现在是为了展示loader是如何使用的）
+
+##### 如何让项目即支持sass也支持less
+
+less没有自成一个体系，所以不需要引擎，只需要loader就可以了
+
+``` shell
+npm install less less-loader --save-dev
+```
+
+然后配置module.js
+
+``` javaScript
+rules: [{
+    test: /\.(less|css)$/,
+    loader: [
+        'style-loader',
+        'fast-css-loader',
+        'less-loader'
+    ]
+}],
+```
+
+然后我们的项目就两种都支持了
+
+### 3、如何做热更新
+
+现在项目的代码修改是会引起浏览器刷新的，如果希望不刷新也能更新代码，则需要继续配置
+
+``` javaScript
+// in webpack.config.dev.js
+module.exports = {
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(), // +
+        new OpenBrowserPlugin({
+            url: `http://localhost:${config.port}` 
+        }),
+        templateHtmlPlugin(),
+    ],
+    devServer: {
+        hot: true,
+        hotOnly: true, // +
+        port: config.port,
+        contentBase: path.resolve(__dirname, '../dist/'),
+    },
+}
+```
+
+### 4、查看各个包在项目所占的大小
+
+``` shell
+npm install webpack-bundle-analyzer --save-dev
+```
+
+``` javaScript
+// in webpack.config.dev.js
+const {
+    BundleAnalyzerPlugin
+} = require('webpack-bundle-analyzer'); //打包内容分析
+module.exports = {
+    plugins: [
+        // 其他
+        new BundleAnalyzerPlugin({
+            analyzerPort: 8919
+        }),
+    ],
+}
+```
+
+### 5、希望编译的时候带进度
 
 我们知道每个项目都区分环境，我们希望不同环境下webpack的配置有些不同，比如开发环境就没必要压缩了，这个时候我们需要一个变量可以区分环境，这里就要引入**cross-env**，安装之后在 *package.json* 的 script 中 dev 命令中改成
 
