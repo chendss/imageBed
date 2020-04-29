@@ -8,33 +8,33 @@
 
 ### 1、webpack 是个啥
 
-*   webpack 是一个模块打包器(bundler)。
-*   在 webpack 看来, 前端的所有资源文件(js/json/css/img/less/...)都会作为模块处理
-*   它将根据模块的依赖关系进行静态分析，生成对应的静态资源
+-   webpack 是一个模块打包器(bundler)。
+-   在 webpack 看来, 前端的所有资源文件(js/json/css/img/less/...)都会作为模块处理
+-   它将根据模块的依赖关系进行静态分析，生成对应的静态资源
 
 ### 2. 五个核心概念
 
-*   Entry：入口起点(entry point)指示 webpack 从哪个文件开始。
-*   Output：output 属性告诉 webpack 把输出文件放在哪里，输出的叫什么名字。
-*   Loader：loader 的概念其实非常简单，就是一个字符串处理函数，把**less、sass**之类的文件转成**css**。
-*   Plugins：插件则可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量等。
-*   Mode：模式，有生产模式 production 和开发模式 development
+-   Entry：入口起点(entry point)指示 webpack 从哪个文件开始。
+-   Output：output 属性告诉 webpack 把输出文件放在哪里，输出的叫什么名字。
+-   Loader：loader 的概念其实非常简单，就是一个字符串处理函数，把**less、sass**之类的文件转成**css**。
+-   Plugins：插件则可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量等。
+-   Mode：模式，有生产模式 production 和开发模式 development
 
 #### 理解 Loader
 
 简单来说，就是处理代码、资源文件的
 
-*   webpack 本身只能加载**js**、**json**模块，如果要加载其他类型的文件(模块)，就需要使用对应的 loader 进行转换/加载
-*   Loader 本身也是运行在 node.js 环境中的 JavaScript 模块
-*   它本身是一个函数，接受源文件作为参数，返回转换的结果
-*   loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做的转换功能，比如 json-loader。
+-   webpack 本身只能加载**js**、**json**模块，如果要加载其他类型的文件(模块)，就需要使用对应的 loader 进行转换/加载
+-   Loader 本身也是运行在 node.js 环境中的 JavaScript 模块
+-   它本身是一个函数，接受源文件作为参数，返回转换的结果
+-   loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做的转换功能，比如 json-loader。
 
 #### 理解 Plugins
 
 用来扩展 webpack 功能的
 
-*   插件可以完成一些 loader 不能完成的功能。
-*   插件的使用一般是在 webpack 的配置信息 plugins 选项中指定。
+-   插件可以完成一些 loader 不能完成的功能。
+-   插件的使用一般是在 webpack 的配置信息 plugins 选项中指定。
 
 ### 关于**webpack.config.js**
 
@@ -53,14 +53,14 @@
 
 项目一定是分环境的，所以我们应该根据环境将文件分开
 
-*   在**webpack**文件夹创建文件**webpack.config.dev.js**表示开发环境的配置
-*   在**webpack**文件夹创建文件**webpack.config.prod.js**表示生产环境的配置
+-   在**webpack**文件夹创建文件**webpack.config.dev.js**表示开发环境的配置
+-   在**webpack**文件夹创建文件**webpack.config.prod.js**表示生产环境的配置
 
 然而我们知道这两个环境的配置大多数是相同的，所以为了避免重复，我们创建一个文件**webpack.config.base.js**，表示公共配置
 
 现在我们把注意点收缩，只关注开发环境先，等开发环境配置完成，我们再抽象一个生产环境的配置，然后再抽象公共配置 **webpack.config.dev.js**
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 const path = require('path')
 const {
@@ -79,19 +79,19 @@ module.exports = {
 
 关于 上述代码解释 如下
 
-*   **entry** 入口代码，这里只需要一个文件
-*   **output** 输入目录的文件
-* `__dirname` 执行文件的路径，它是 node 执行的时候注入的变量，例如 webpack --config xx/xx/xx.js 那么 dirname 就是 xx/xx
+-   **entry** 入口代码，这里只需要一个文件
+-   **output** 输入目录的文件
+-   `__dirname` 执行文件的路径，它是 node 执行的时候注入的变量，例如 webpack --config xx/xx/xx.js 那么 dirname 就是 xx/xx
 
-### 2、配置webpack过程
+### 2、配置 webpack 过程
 
-#### 最简单的webpack配置
+#### 最简单的 webpack 配置
 
 到这里，最简单的**webpack**配置已经完成，我们在**package.json**添加**script**命令**dev**，具体如下
 
 ![](https://ae01.alicdn.com/kf/H2d04fbacdb494da0972bfe5cb7062ca7D.png)
 
-``` shell
+```shell
 webpack --config webpack/webpack.config.dev.js
 ```
 
@@ -99,7 +99,7 @@ webpack --config webpack/webpack.config.dev.js
 
 清空一个文件夹的**shell**命令是 `rm -rf dist` ，但是注意这个命令在 linux 是无法正确执行的，因为在 linux 上要 sudo 提权，所以我们需要一个包来磨平这种差异，这里推荐用**rimraf**, 所以我们在 scirpt 新增一条命令 clean，代码如下
 
-``` shell
+```shell
 rimraf dist/*
 ```
 
@@ -111,7 +111,7 @@ rimraf dist/*
 
 接下来遇到一个问题，每次修改文件都需要重新执行一次命令，这样很麻烦，我希望文件更新便自动刷新 所以我们需要在 webpack 配置中配置 watch 和 watchOptions
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 module.exports = {
     ...其他,
@@ -132,12 +132,12 @@ module.exports = {
 如此我们就可以代码一修改编译就自动运行了。但是还是需要手动刷新页面，有没有办法自动刷新页面呢，那当然是有的
 我们分解一下需求
 
-*   自动打开浏览器
-*   代码修改页面热更新
+-   自动打开浏览器
+-   代码修改页面热更新
 
 一个一个来，**自动打开浏览器**
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 module.exports = {
     devServer: {
@@ -149,16 +149,16 @@ module.exports = {
 }
 ```
 
-其中需要注意的是，这样打开浏览器是看不到任何东西的，因为平时我们开发项目的时候打开浏览器能看得见东西是因为有一个webpack服务器，所以还需要做两件事
+其中需要注意的是，这样打开浏览器是看不到任何东西的，因为平时我们开发项目的时候打开浏览器能看得见东西是因为有一个 webpack 服务器，所以还需要做两件事
 
-* 配置html模版
-* 配置webpack服务器
+-   配置 html 模版
+-   配置 webpack 服务器
 
-###### 配置html模版
+###### 配置 html 模版
 
-是什么意思呢，就是配置一个html文件，做为母版，在母版里面配置加载的js文件、样式文件等等，也是作为浏览器访问的html文件，我们得借助一个插件完成这件事（不是说不用插件就做不了，当然也是可以做的，后面会讲手动实现的思路） **html-webpack-plugin**
+是什么意思呢，就是配置一个 html 文件，做为母版，在母版里面配置加载的 js 文件、样式文件等等，也是作为浏览器访问的 html 文件，我们得借助一个插件完成这件事（不是说不用插件就做不了，当然也是可以做的，后面会讲手动实现的思路） **html-webpack-plugin**
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 const htmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
@@ -176,14 +176,14 @@ module.exports = {
 }
 ```
 
-这样编译后使得dist里多一个文件 **index.html**，到此我们的模版就做好了
+这样编译后使得 dist 里多一个文件 **index.html**，到此我们的模版就做好了
 
-###### 搭建webpack本地服务器
+###### 搭建 webpack 本地服务器
 
 这个东东其实是浏览器打开 localhost:xx 的时候访问资源所需要的承载，这个不需要太在意，就记住要一个服务器就好了。
-我们一开始都是使用webpack --config xx来执行webpack构建过程的，到这里我们需要换一个库，就是让webpack带服务器运行的插件，**webpack-dev-serve**，至此我们的**package.json**的script代码修改为
+我们一开始都是使用 webpack --config xx 来执行 webpack 构建过程的，到这里我们需要换一个库，就是让 webpack 带服务器运行的插件，**webpack-dev-serve**，至此我们的**package.json**的 script 代码修改为
 
-``` json
+```json
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "dev": "npm run clean && webpack-dev-server --config  webpack/webpack.config.dev.js --open",
@@ -195,12 +195,12 @@ module.exports = {
 
 我们到现在完成了以下的功能
 
-* 可以自动打开浏览器，运行在webpack服务器 （**webpack-dev-serve**+**html-webpack-plugin**）
-* 自动监听文件变化，自动编译 （配置watch）
+-   可以自动打开浏览器，运行在 webpack 服务器 （**webpack-dev-serve**+**html-webpack-plugin**）
+-   自动监听文件变化，自动编译 （配置 watch）
 
 整个项目的配置到现在如下
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 const path = require('path')
 const webpack = require('webpack')
@@ -243,7 +243,7 @@ module.exports = {
 }
 ```
 
-``` json
+```json
 // in package.json
 {
 	"name": "imagebed",
@@ -275,42 +275,41 @@ module.exports = {
 		"lodash": "^4.17.15"
 	}
 }
-
 ```
 
-### 3、处理非 js 文件的loader
+### 3、处理非 js 文件的 loader
 
-一个前端项目里不可能只有js文件，我们还会有**css**文件，**字体**文件，**图片**文件等资源文件，接下来我们就一步步处理这些资源。
+一个前端项目里不可能只有 js 文件，我们还会有**css**文件，**字体**文件，**图片**文件等资源文件，接下来我们就一步步处理这些资源。
 
-#### 处理css与预编译样式问题
+#### 处理 css 与预编译样式问题
 
 如果项目不需要预处理器，这个部分可以跳过
 
 预处理有好几个，像**less**、**sass**等等，配置方法大同小异，这里只讲**sass**的配置
-在把sass纳入项目我们需要两个东西
+在把 sass 纳入项目我们需要两个东西
 
-* sass引擎 - 因为sass以及自成一套体系，几乎可以作为一个新的语言
-* sass-loader - webpack如何解析sass、scss文件就靠这个loader
+-   sass 引擎 - 因为 sass 以及自成一套体系，几乎可以作为一个新的语言
+-   sass-loader - webpack 如何解析 sass、scss 文件就靠这个 loader
 
-#### sass引擎
+#### sass 引擎
 
 这个简单，直接安装就是，但是在安装时会遇到安装问题, 如下安装方法即可
 
-``` shell
+```shell
 npm install --save-dev node-sass --registry=https://registry.npm.taobao.org
 ```
 
-#### 关于sass的loader
+#### 关于 sass 的 loader
 
-市面上普遍是使用 **sass-loader** 但是它很慢，所以我们为了更好的性能可以使用 **fast-sass-loader**, sass处理完就得处理css，同样的为了性能使用 **fast-css-loader**，**style-loader**
+市面上普遍是使用 **sass-loader** 但是它很慢，所以我们为了更好的性能可以使用 **fast-sass-loader**, sass 处理完就得处理 css，同样的为了性能使用 **fast-css-loader**，**style-loader**
 
-``` shell
+```shell
 npm install fast-sass-loader fast-css-loader style-loader --save-dev
 ```
 
-然后就可以配置webpack了, 因为以后项目还会有很多的loader，所以不希望太多代码聚集在同一个文件里，创建文件 **webpack\module.js**
+然后就可以配置 webpack 了, 因为以后项目还会有很多的 loader，所以不希望太多代码聚集在同一个文件里，创建文件 **webpack\module.js**
 
-``` javaScript
+```javaScript
 // in module.js
 module.exports = function() {
     return {
@@ -327,7 +326,7 @@ module.exports = function() {
 }
 ```
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 const moduleConfig = require('./module')
 
@@ -336,19 +335,19 @@ module.exports = {
 }
 ```
 
-这样我们的sass文件就可以被webpack识别，并且在页面生效了，那么能不即用**sass**又用**less**呢，当然是可以的，只要两个loader就可以了，（项目里最好不要用两个，为了技术栈统一，现在是为了展示loader是如何使用的）
+这样我们的 sass 文件就可以被 webpack 识别，并且在页面生效了，那么能不即用**sass**又用**less**呢，当然是可以的，只要两个 loader 就可以了，（项目里最好不要用两个，为了技术栈统一，现在是为了展示 loader 是如何使用的）
 
-##### 如何让项目即支持sass也支持less
+##### 如何让项目即支持 sass 也支持 less
 
-less没有自成一个体系，所以不需要引擎，只需要loader就可以了
+less 没有自成一个体系，所以不需要引擎，只需要 loader 就可以了
 
-``` shell
+```shell
 npm install less less-loader --save-dev
 ```
 
-然后配置module.js
+然后配置 module.js
 
-``` javaScript
+```javaScript
 rules: [{
     test: /\.(less|css)$/,
     loader: [
@@ -365,14 +364,14 @@ rules: [{
 
 现在项目的代码修改是会引起浏览器刷新的，如果希望不刷新也能更新代码，则需要继续配置
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(), // +
         new OpenBrowserPlugin({
-            url: `http://localhost:${config.port}` 
+            url: `http://localhost:${config.port}`
         }),
         templateHtmlPlugin(),
     ],
@@ -387,11 +386,11 @@ module.exports = {
 
 ### 4、查看各个包在项目所占的大小
 
-``` shell
+```shell
 npm install webpack-bundle-analyzer --save-dev
 ```
 
-``` javaScript
+```javaScript
 // in webpack.config.dev.js
 const {
     BundleAnalyzerPlugin
@@ -408,11 +407,38 @@ module.exports = {
 
 ### 5、希望编译的时候带进度
 
-我们知道每个项目都区分环境，我们希望不同环境下webpack的配置有些不同，比如开发环境就没必要压缩了，这个时候我们需要一个变量可以区分环境，这里就要引入**cross-env**，安装之后在 *package.json* 的 script 中 dev 命令中改成
+```shell
+npm install progress-bar-webpack-plugin --save-dev
+```
 
-``` json
+```javaScript
+// in webpack.config.dev.js
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+module.exports = {
+    plugins: [
+        // 其他
+      new ProgressBarPlugin(),
+    ],
+}
+```
+
+希望上述几个例子可以理解 **plugins**和**loader**的作用
+
+### 6、执行环境
+
+我们知道每个项目都区分环境，我们希望不同环境下 webpack 的配置有些不同，比如开发环境就没必要压缩了，这个时候我们需要一个变量可以区分环境，这里就要引入**cross-env**，安装之后在 _package.json_ 的 script 中 dev 命令中改成
+
+```shell
+npm install cross-env --save-dev
+```
+
+```json
 "scripts": {
-  "dev": "cross-env-shell ENV=loc webpack --config  webpack/webpack.config.dev.js --open",
+  "dev": "cross-env-shell ENV=loc webpack --config  webpack/webpack.config.dev.js", // 相对于给  process.env 注入一个变量ENV为loc
   "clean": "rimraf dist/*"
 }
 ```
+
+### 7、代码分离
+
+因为一个项目中 webpack 的配置可能会越来越庞大，所以一定程度的解耦是需要的。

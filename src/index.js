@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import './styles/index.scss'
 
-
 // var url = 'https://api.uomg.com/api/image.ali'
 var url = 'https://api.169740.com/api/image.ali'
 $(document).ready(function () {
@@ -22,7 +21,7 @@ $(document).ready(function () {
     file_upload(e.originalEvent.dataTransfer.files)
   })
 })
-function file_upload(files) {
+function file_upload (files) {
   if (files.length == 0) return alert('请选择图片文件！')
   for (var j = 0, len = files.length; j < len; j++) {
     console.log('文件上传流', files[j])
@@ -61,7 +60,7 @@ function file_upload(files) {
     })
   }
 }
-function url_upload() {
+function url_upload () {
   var urls = $('#urls').val()
   if (urls == false) return alert('请输入图片链接！')
   var UrlArr = urls.split('\n')
