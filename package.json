@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "webpack --config webpack/webpack.config.dev.js",
+		"dev": "npm run clean && cross-env-shell ENV=loc webpack-dev-server --config  webpack/webpack.config.dev.js --open",
 		"clean": "rimraf dist/*"
 	},
 	"repository": {
@@ -15,6 +15,8 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"cross-env": "^7.0.2",
+		"html-webpack-plugin": "^4.2.1",
 		"open-browser-webpack-plugin": "^0.0.5",
 		"rimraf": "^3.0.2",
 		"webpack": "^4.43.0",
@@ -23,7 +25,6 @@
 	},
 	"dependencies": {
 		"axios": "^0.19.2",
-		"html-webpack-plugin": "^4.2.0",
 		"jquery": "^3.5.0",
 		"lodash": "^4.17.15"
 	}
