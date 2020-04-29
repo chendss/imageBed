@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const config = require('./config')
+const moduleConfig = require('./module')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
@@ -24,6 +25,7 @@ module.exports = {
     new OpenBrowserPlugin({ url: `http://localhost:${config.port}` }),
     templateHtmlPlugin(),
   ],
+  module: moduleConfig(process.env.ENV),
   devServer: {
     hot: true,
     port: config.port,
@@ -33,5 +35,5 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, '../dist'),
   },
-  mode: config.mode(),
+  mode: config.mode(process.env.ENV),
 }

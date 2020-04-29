@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import './main.scss'
 
 // var url = 'https://api.uomg.com/api/image.ali'
 var url = 'https://api.169740.com/api/image.ali'

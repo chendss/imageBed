@@ -16,6 +16,6 @@ module.exports = {
     }
   },
   mode(env) {
-    return env === 'loc' ? 'development' : ''
+    return env === 'loc' ? 'development' : 'production'
   }
 }

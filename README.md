@@ -4,15 +4,15 @@
 
 本项目旨在整个互联网的免费的图床，整合上传, 也借此项目使用 webpack4 从零搭建一个项目，看此文的朋友我希望你拥有基础的 webpack 相关知识，包括但不限于 如何初始化一个项目、npm 是什么、yarn 是什么、webpack 基本配置、前端模块化，现在正文开始。
 
-## webpack 理论
+## 一、webpack 理论
 
-### webpack 是个啥
+### 1、webpack 是个啥
 
 *   webpack 是一个模块打包器(bundler)。
 *   在 webpack 看来, 前端的所有资源文件(js/json/css/img/less/...)都会作为模块处理
 *   它将根据模块的依赖关系进行静态分析，生成对应的静态资源
 
-### 五个核心概念
+### 2. 五个核心概念
 
 *   Entry：入口起点(entry point)指示 webpack 从哪个文件开始。
 *   Output：output 属性告诉 webpack 把输出文件放在哪里，输出的叫什么名字。
@@ -40,16 +40,16 @@
 
 很多文章都在说这个文件是 webpack 的配置文件，其实不能这样说，因为这个文件其实可以随便命名，即使我把它命名**xxxx.js**也是可以的，现在假设项目里有个文件，路径在**src/test.js**里面的内容是 webpack 的配置，那么我们依然可以通过 `webpack --config src/test.js` 命令启动 webpack
 
-### webpack 工作流程
+### 3、webpack 工作流程
 
 其实它简化之后就是那么简单而已，一个文本处理器
 ![](https://ae01.alicdn.com/kf/H2b862d4fe8f24246b9010618d9d3d2d3B.png)
 
-## 如何从零写一个 webpack
+## 二、如何从零写一个 webpack
 
 其他配置其实是大同小异的，本文拿**scss**、**原生 js**来举例
 
-### 环境与 webpack 编译
+### 1、环境与 webpack 编译
 
 项目一定是分环境的，所以我们应该根据环境将文件分开
 
@@ -83,7 +83,7 @@ module.exports = {
 *   **output** 输入目录的文件
 * `__dirname` 执行文件的路径，它是 node 执行的时候注入的变量，例如 webpack --config xx/xx/xx.js 那么 dirname 就是 xx/xx
 
-### 配置webpack过程
+### 2、配置webpack过程
 
 #### 最简单的webpack配置
 
@@ -191,7 +191,7 @@ module.exports = {
   "dev": "npm run clean && webpack-dev-server --config  webpack/webpack.config.dev.js --open",
   "clean": "rimraf dist/*"
 }
-  ```
+```
 
 这样浏览器打开之后就可以看到**index.html**的内容了
 
@@ -254,7 +254,6 @@ module.exports = {
 {
 	"name": "imagebed",
 	"version": "1.0.0",
-	"description": "本项目旨在整个互联网的免费的图床，整合上传,也借此项目使用webpack4从零搭建一个项目，看此文的朋友我希望你拥有基础的webpack相关知识，包括但不限于 如何初始化一个项目、npm是什么、yarn是什么、webpack基本配置、前端模块化，现在正文开始。",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -285,9 +284,63 @@ module.exports = {
 
 ```
 
-### 处理非 js 文件的loader
+### 3、处理非 js 文件的loader
 
 一个前端项目里不可能只有js文件，我们还会有**css**文件，**字体**文件，**图片**文件等资源文件，接下来我们就一步步处理这些资源。
+
+#### 处理css与预编译样式问题
+
+如果项目不需要预处理器，这个部分可以跳过
+
+预处理有好几个，像**less**、**sass**等等，配置方法大同小异，这里只讲**sass**的配置
+在把sass纳入项目我们需要两个东西
+
+* sass引擎 - 因为sass以及自成一套体系，几乎可以作为一个新的语言
+* sass-loader - webpack如何解析sass、scss文件就靠这个loader
+
+但是在安装时会遇到安装问题, 如下安装方法即可
+
+``` shell
+npm install --save-dev node-sass --registry=https://registry.npm.taobao.org
+```
+
+#### 关于sass的loader
+
+市面上普遍是使用 **sass-loader** 但是它很慢，所以我们为了更好的性能可以使用 **fast-sass-loader**, sass处理完就得处理css，同样的为了性能使用 **fast-css-loader**，**style-loader**
+
+``` shell
+npm install fast-sass-loader fast-css-loader style-loader --save-dev
+```
+
+然后就可以配置webpack了, 因为以后项目还会有很多的loader，所以不希望太多代码聚集在同一个文件里，创建文件 **webpack\module.js**
+
+``` javaScript
+// in module.js
+module.exports = function() {
+    return {
+        rules: [{
+            test: /\.scss$/,
+            exclude: /node_modules/,
+            loader: [
+                'style-loader',
+                'fast-css-loader',
+                'fast-sass-loader',
+            ]
+        }, ]
+    }
+}
+```
+
+```javaScript
+// in webpack.config.dev.js
+const moduleConfig = require('./module')
+
+module.exports = {
+  module: moduleConfig(),
+}
+```
+
+这样我们的sass文件就可以被webpack识别，并且在页面生效了
 
 我们知道每个项目都区分环境，我们希望不同环境下webpack的配置有些不同，比如开发环境就没必要压缩了，这个时候我们需要一个变量可以区分环境，这里就要引入**cross-env**，安装之后在 *package.json* 的 script 中 dev 命令中改成
 
