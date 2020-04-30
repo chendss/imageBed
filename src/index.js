@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import './styles/index.scss'
 
+console.log('hahah')
 // var url = 'https://api.uomg.com/api/image.ali'
 var url = 'https://api.169740.com/api/image.ali'
 $(document).ready(function () {

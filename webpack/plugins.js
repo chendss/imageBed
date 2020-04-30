@@ -1,10 +1,15 @@
 const path = require('path')
+const glob = require('glob')
 const webpack = require('webpack')
+const cssnano = require('cssnano')
+const purifycssWebpack = require('purifycss-webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');//打包内容分析
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 const templateHtmlPlugin = function (config) {
   return new htmlWebpackPlugin({
@@ -24,9 +29,13 @@ const cssOptPlugin = function (env, config) {
     })
   ]
   if (env === 'prod') {
-    result.push(new OptimizeCssAssetsPlugin({
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
+    result.push(new OptimizeCSSAssetsPlugin({
+      assetNameRegExp: /\.css\.*(?!.*map)/g,  //注意不要写成 /\.css$/g
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: { removeAll: true },
+        safe: true,
+        autoprefixer: false
       },
       canPrint: true
     }))
@@ -34,9 +43,23 @@ const cssOptPlugin = function (env, config) {
   return result
 }
 
+/**
+ * 处理没有用到的css
+ *
+ * @param {*} env
+ */
+const purifycss = function (env, distPath) {
+  if (env === 'prod') {
+    return [new purifycssWebpack({
+      paths: glob.sync(distPath)
+    })]
+  }
+  return []
+}
+
 module.exports = function (env, config, distPath) {
   const result = [
-    ...cssOptPlugin(),
+    ...cssOptPlugin(env),
     new ProgressBarPlugin(),
     templateHtmlPlugin(config),
     new webpack.NamedModulesPlugin(),
@@ -44,7 +67,15 @@ module.exports = function (env, config, distPath) {
     new BundleAnalyzerPlugin({
       analyzerMode: 'disabled', // 不启动展示打包报告的http服务器
       generateStatsFile: true, // 是否生成stats.json文件 }),
-    })
+    }),
+    new friendlyErrorsWebpackPlugin(),
+    ...purifycss(env, distPath),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../src/static'),
+        to: distPath + '/static'
+      },
+    ]),
   ]
   return result
 }

@@ -21,6 +21,7 @@ const styleLoader = function (env) {
     },
     {
       test: /\.(less|css)$/,
+      exclude: /node_modules/,
       use: [
         ...extraUse(env),
         'fast-css-loader',
@@ -34,6 +35,7 @@ module.exports = function (env) {
   return {
     rules: [
       ...styleLoader(env),
-    ]
+    ],
+    noParse: /jquery/
   }
 }

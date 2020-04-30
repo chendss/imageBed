@@ -23,5 +23,6 @@ module.exports = {
     filename: '[name].[hash].bundle.js',
     path: distPath,
   },
+  optimization: config.optimization(ENV),
   mode: config.mode(ENV),
 }
