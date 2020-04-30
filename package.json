@@ -5,7 +5,10 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"analyz": "webpack-bundle-analyzer --port 6919 ./dist/stats.json",
 		"dev": "npm run clean && cross-env-shell ENV=loc webpack-dev-server --config  webpack/webpack.config.dev.js --open",
+		"build": "npm run clean && cross-env-shell ENV=prod webpack --config  webpack/webpack.config.dev.js && npm run analyz",
+		"prod": "npm run clean && cross-env-shell ENV=prod webpack --config  webpack/webpack.config.dev.js",
 		"clean": "rimraf dist/*"
 	},
 	"repository": {
@@ -21,8 +24,10 @@
 		"html-webpack-plugin": "^4.2.1",
 		"less": "^3.11.1",
 		"less-loader": "^6.0.0",
+		"mini-css-extract-plugin": "^0.9.0",
 		"node-sass": "^4.14.0",
 		"open-browser-webpack-plugin": "^0.0.5",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
 		"progress-bar-webpack-plugin": "^2.1.0",
 		"rimraf": "^3.0.2",
 		"style-loader": "^1.2.1",

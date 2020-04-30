@@ -3,6 +3,9 @@ const path = require('path')
 module.exports = {
   port: 6629,
   publicPath: './',
+  devtool(env) {
+    return env !== 'loc' ? 'inline-source-map' : false
+  },
   watch(env) {
     return env === 'loc'
   },
