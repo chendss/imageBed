@@ -481,6 +481,23 @@ new CopyWebpackPlugin([
 ]),
 ```
 
+#### 抽离文件大的包
+
+例如 jquery 体积很大，可以单独取出来,在 webpack4 里很容易配置就可以满足
+
+```javaScript
+// in webpack.config.dev.js
+module.exports = {
+    optimization:{
+        concatenateModules: true,
+        splitChunks: {
+          chunks: 'all',
+        },
+        usedExports: true
+      }
+}
+```
+
 希望上述几个例子可以理解 **plugins**和**loader**的作用
 
 ### 6、执行环境
@@ -544,18 +561,331 @@ new purifycssWebpack({
 
 #### 压缩 js
 
-#### 生产环境需要代码打包到具体文件夹
+简单配置即可
 
-### 7、代码分离
+```javaScript
+// in webpack.config.dev.js
+const cssnano = require('cssnano')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+module.exports = {
+    optimization: {
+        concatenateModules: true,
+        splitChunks: {
+          chunks: 'all',
+        },
+        usedExports: true
+      }
+    },
+}
+```
 
 ### 8、babel 是个什么东西
 
-#### babel 介绍与原理解析
+首先要说明的是，现在前端流行用的 WebPack 或其他同类工程化工具会将源文件组合起来，这部分并不是 Babel 完成的，是这些打包工具自己实现的，Babel 的功能非常纯粹，以字符串的形式将源代码传给它，它就会返回一段新的代码字符串（以及 sourcemap）。他既不会运行你的代码，也不会将多个代码打包到一起，它就是个编译器，输入语言是 ES6+，编译目标语言是 ES5。
 
-##### babel 简介
+#### babel 简介
+
+babel 实际上类似一般的的语言编译器，作用就是输入输入代码，实际上跟很多人理解的不太一样，babel 并不是只能用于 ES6 编译成 ES5，只要你愿意，你完全可以把 ES5 编译成 ES6，或者使用自己创造的某种语法（例如 JSX，以及本文结合的 babel 插件就属于这类），你需要做的只是编写对应的插件。
 
 #### bable 原理解析
 
-把代码转成 es5，因为有些垃圾浏览器还不支持 es6（建议放弃这些客户）
+Babel 的编译过程跟绝大多数其他语言的编译器大致同理，分为三个阶段：
 
-因为一个项目中 webpack 的配置可能会越来越庞大，所以一定程度的解耦是需要的。
+1. **解析**：将代码字符串解析成抽象语法树
+2. **变换**：对抽象语法树进行变换操作
+3. **再建**：根据变换后的抽象语法树再生成代码字符串
+
+一句话来说就是，字符串转成另一种字符串而实现的技术是用抽象语法树 **AST**（下面会稍微讲一下）
+
+#### 迷惑的 AST
+
+我们都知道 javascript 代码是由一系列字符组成的，我们看一眼字符就知道它是干什么的，例如变量声明、赋值、括号、函数调用等等。但是计算机并没有眼睛可以看到，它需要某种机制去理解代码字符串，基于此考虑为了让人和计算机都能够理解代码，就有了 AST 这么个东西，它是源代码的一种映射，在某种规则中二者可以相互转化，语言引擎根据 AST 就能知道代码的作用是什么。
+
+简单来说就是有一个东西将代码映射成内存里一个对象，如图
+
+![](https://ae01.alicdn.com/kf/H437855c22fd749b7ad3fb5deb1dd0ce8p.png)
+
+这里简单举个例子 ，有兴趣深究的同学可以看[The ESTree Spec](https://github.com/estree/estree)。
+
+## 三、最后
+
+### 代码拆分
+
+在项目中，webpack 的配置很多，为了后期的维护，作者提出一个拆分方案
+
+-   在跟目录创建文件夹 **webpack** 将 webpack 的配置相关的代码移到此文件夹中
+-   将 **loader** 与 **plugins** 单独抽离出来
+-   将具有环境相关的并且通用的配置放在**config.js**里
+
+所以现在代码就可以拆分成以下结构
+
+```javaScript
+// in config.js
+const path = require('path')
+
+module.exports = {
+  port: 6629,
+  publicPath: './',
+  devtool (env) {
+    return env === 'loc' ? 'cheap-module-source-map' : false
+  },
+  watch (env) {
+    return env === 'loc'
+  },
+  watchOptions () {
+    return {
+      // 只有开启监听模式watchOptions才有意义
+      ignored: /node_modules/, // 不监听的文件或者文件夹，默认为空，支持正则匹配。
+      // 监听到变化发生后，会等300ms再去执行更新，默认是300ms
+      aggregateTimeout: 300,
+      poll: 1000, // 判断文件是否发生变化，是通过不停的询问系统指定文件有没有发生变化实现的，默认每秒问1000次。
+    }
+  },
+  mode (env) {
+    return env === 'loc' ? 'development' : 'production'
+  },
+  optimization (env) {
+    if (env === 'prod') {
+      return {
+        concatenateModules: true,
+        splitChunks: {
+          chunks: 'all',
+        },
+        usedExports: true
+      }
+    }
+    return null
+  }
+}
+```
+
+```javaScript
+// in module.js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+const extraUse = function (env) {
+  let result = []
+  if (env === 'prod') {
+    result = [MiniCssExtractPlugin.loader]
+  }
+  return result
+}
+
+const styleLoader = function (env) {
+  return [
+    {
+      test: /\.scss|scss|css$/,
+      exclude: /node_modules/,
+      use: [
+        ...extraUse(env),
+        'fast-css-loader',
+        'fast-sass-loader'
+      ]
+    },
+    {
+      test: /\.(less|css)$/,
+      exclude: /node_modules/,
+      use: [
+        ...extraUse(env),
+        'fast-css-loader',
+        'less-loader'
+      ]
+    },
+  ]
+}
+
+module.exports = function (env) {
+  return {
+    rules: [
+      ...styleLoader(env),
+    ],
+    noParse: /jquery/
+  }
+}
+```
+
+```javaScript
+// in webpack.config.dev
+const path = require('path')
+const config = require('./config')
+const plugins = require('./plugins')
+const moduleConfig = require('./module')
+
+const ENV = process.env.ENV
+const distPath = path.resolve(__dirname, '../dist')
+
+module.exports = {
+  plugins: plugins(ENV, config, distPath),
+  watchOptions: config.watchOptions(),
+  watch: config.watch(ENV),
+  module: moduleConfig(ENV),
+  devtool: config.devtool(ENV),
+  entry: path.resolve(__dirname, '../src/index.js'),
+  devServer: {
+    hot: true,
+    hotOnly: true,
+    port: config.port,
+    contentBase: distPath,
+  },
+  output: {
+    filename: '[name].[hash].bundle.js',
+    path: distPath,
+  },
+  optimization: config.optimization(ENV),
+  mode: config.mode(ENV),
+}
+```
+
+```javaScript
+// in plugins.js
+const path = require('path')
+const glob = require('glob')
+const webpack = require('webpack')
+const cssnano = require('cssnano')
+const purifycssWebpack = require('purifycss-webpack')
+const htmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const miniCssExtractPlugin = require('mini-css-extract-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')//打包内容分析
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+
+const templateHtmlPlugin = function (config) {
+  return new htmlWebpackPlugin({
+    filename: 'index.html',
+    title: '图床',
+    showErrors: true,
+    publicPath: config.publicPath,
+    template: path.join(__dirname, '../src/index.html')
+  })
+}
+
+const cssOptPlugin = function (env, config) {
+  const result = [
+    new miniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    })
+  ]
+  if (env === 'prod') {
+    result.push(new OptimizeCSSAssetsPlugin({
+      assetNameRegExp: /\.css\.*(?!.*map)/g,  //注意不要写成 /\.css$/g
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: { removeAll: true },
+        safe: true,
+        autoprefixer: false
+      },
+      canPrint: true
+    }))
+  }
+  return result
+}
+
+/**
+ * 处理没有用到的css
+ *
+ * @param {*} env
+ */
+const purifycss = function (env, distPath) {
+  if (env === 'prod') {
+    return [new purifycssWebpack({
+      paths: glob.sync(distPath)
+    })]
+  }
+  return []
+}
+
+module.exports = function (env, config, distPath) {
+  const result = [
+    ...cssOptPlugin(env),
+    new ProgressBarPlugin(),
+    templateHtmlPlugin(config),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled', // 不启动展示打包报告的http服务器
+      generateStatsFile: true, // 是否生成stats.json文件 }),
+    }),
+    new friendlyErrorsWebpackPlugin(),
+    ...purifycss(env, distPath),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../src/static'),
+        to: distPath + '/static'
+      },
+    ]),
+  ]
+  return result
+}
+```
+
+至今为止，代码结构如下
+
+![](https://ae01.alicdn.com/kf/H3ca7ac71b1b74af98576884da6ca4dd81.png)
+
+### package.json 配置
+
+```json
+{
+	"name": "imagebed",
+	"version": "1.0.0",
+	"description": "本项目旨在整个互联网的免费的图床，整合上传,也借此项目使用webpack4从零搭建一个项目，看此文的朋友我希望你拥有基础的webpack相关知识，包括但不限于 如何初始化一个项目、npm是什么、yarn是什么、webpack基本配置、前端模块化，现在正文开始。",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"analyz": "webpack-bundle-analyzer --port 6919 ./dist/stats.json",
+		"dev": "npm run clean && cross-env-shell ENV=loc webpack-dev-server --config  webpack/webpack.config.dev.js --open",
+		"build": "npm run clean && cross-env-shell ENV=prod webpack --config  webpack/webpack.config.dev.js && npm run analyz",
+		"prod": "npm run clean && cross-env-shell ENV=prod webpack --config  webpack/webpack.config.dev.js",
+		"clean": "rimraf dist/*"
+	},
+	"repository": {
+		"type": "git",
+		"url": "none"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/core": "^7.9.6",
+		"@babel/polyfill": "^7.8.7",
+		"@babel/preset-env": "^7.9.6",
+		"@babel/runtime": "^7.9.6",
+		"babel-loader": "^8.1.0",
+		"copy-webpack-plugin": "^5.1.1",
+		"cross-env": "^7.0.2",
+		"cssnano": "^4.1.10",
+		"fast-css-loader": "^1.0.2",
+		"fast-sass-loader": "^1.5.0",
+		"friendly-errors-webpack-plugin": "^1.7.0",
+		"glob": "^7.1.6",
+		"html-webpack-plugin": "^4.2.1",
+		"less": "^3.11.1",
+		"less-loader": "^6.0.0",
+		"mini-css-extract-plugin": "^0.9.0",
+		"node-sass": "^4.14.0",
+		"open-browser-webpack-plugin": "^0.0.5",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"progress-bar-webpack-plugin": "^2.1.0",
+		"purify-css": "^1.2.5",
+		"purifycss-webpack": "^0.7.0",
+		"rimraf": "^3.0.2",
+		"style-loader": "^1.2.1",
+		"webpack": "^4.43.0",
+		"webpack-bundle-analyzer": "^3.7.0",
+		"webpack-cli": "^3.3.11",
+		"webpack-dev-server": "^3.10.3",
+		"webpack-parallel-uglify-plugin": "^1.1.2"
+	},
+	"dependencies": {
+		"axios": "^0.19.2",
+		"jquery": "^3.5.0",
+		"lodash": "^4.17.15"
+	}
+}
+```
+
+### 写在最后
+
+写了那么多，大家应该对 webpack 有一定的认识，其实这些东西都很简单只是需要大家动手尝试，最好是将每个部分的东西分离出来，这样才不会混在一起，无法阅读。本文档是项目初期写的，后期项目有更新将不会同步文档，只要掌握原理就大同小异了。有兴趣的同学可以去给我的图床项目点个**start** [⭐⭐⭐⭐⭐]

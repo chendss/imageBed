@@ -2,12 +2,12 @@ const path = require('path')
 const glob = require('glob')
 const webpack = require('webpack')
 const cssnano = require('cssnano')
-const purifycssWebpack = require('purifycss-webpack');
+const purifycssWebpack = require('purifycss-webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');//打包内容分析
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')//打包内容分析
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
