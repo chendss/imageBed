@@ -1,11 +1,10 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const extraUse = function (env) {
-  let result = []
+const cssLoader = function (env) {
   if (env === 'prod') {
-    result = [MiniCssExtractPlugin.loader]
+    return ['style-loader']
   }
-  return result
+  return [MiniCssExtractPlugin.loader]
 }
 
 const styleLoader = function (env) {
@@ -14,16 +13,17 @@ const styleLoader = function (env) {
       test: /\.scss|scss|css$/,
       exclude: /node_modules/,
       use: [
-        ...extraUse(env),
+        ...cssLoader(env),
+        'style-loader',
         'fast-css-loader',
-        'fast-sass-loader'
+        'fast-sass-loader',
       ]
     },
     {
       test: /\.(less|css)$/,
       exclude: /node_modules/,
       use: [
-        ...extraUse(env),
+        ...cssLoader(env),
         'fast-css-loader',
         'less-loader'
       ]

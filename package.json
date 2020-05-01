@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"analyz": "webpack-bundle-analyzer --port 6919 ./dist/stats.json",
-		"dev": "npm run clean && cross-env-shell ENV=loc webpack-dev-server --config  webpack/webpack.config.dev.js --open",
+		"dev": "cross-env-shell ENV=loc webpack-dev-server --config  webpack/webpack.config.dev.js --open",
 		"build": "npm run clean && cross-env-shell ENV=prod webpack --config  webpack/webpack.config.dev.js && npm run analyz",
 		"prod": "npm run clean && cross-env-shell ENV=prod webpack --config  webpack/webpack.config.dev.js",
 		"clean": "rimraf dist/*"

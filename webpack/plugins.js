@@ -22,12 +22,7 @@ const templateHtmlPlugin = function (config) {
 }
 
 const cssOptPlugin = function (env, config) {
-  const result = [
-    new miniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
-    })
-  ]
+  const result = []
   if (env === 'prod') {
     result.push(new OptimizeCSSAssetsPlugin({
       assetNameRegExp: /\.css\.*(?!.*map)/g,  //注意不要写成 /\.css$/g
@@ -38,6 +33,10 @@ const cssOptPlugin = function (env, config) {
         autoprefixer: false
       },
       canPrint: true
+    }))
+    result.push(new miniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
     }))
   }
   return result
@@ -57,6 +56,19 @@ const purifycss = function (env, distPath) {
   return []
 }
 
+const copyAction = function (env) {
+  let result = []
+  if (env === 'prod') {
+    result = [new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../src/static'),
+        to: distPath + '/static'
+      },
+    ])]
+  }
+  return result
+}
+
 module.exports = function (env, config, distPath) {
   const result = [
     ...cssOptPlugin(env),
@@ -70,12 +82,7 @@ module.exports = function (env, config, distPath) {
     }),
     new friendlyErrorsWebpackPlugin(),
     ...purifycss(env, distPath),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../src/static'),
-        to: distPath + '/static'
-      },
-    ]),
+    ...copyAction(env)
   ]
   return result
 }
