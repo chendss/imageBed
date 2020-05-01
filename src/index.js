@@ -1,5 +1,6 @@
 import $ from 'jquery'
-import { qs } from '@/utils/index'
+import { qs, log } from '@/utils/index'
+import axios from 'axios'
 import './styles/index.scss'
 
 console.log('hahah2')
@@ -45,23 +46,13 @@ function file_upload (files) {
   }
 }
 
-const changeImg = function () {
-  setTimeout(() => {
-    const imgs = qs('#id-bg-img .home-cover-img')
-    imgs.forEach(img => {
-      img.classList.toggle('none')
-      img.classList.toggle('animate-in')
-      img.src = ''
-      setTimeout(() => {
-        img.src = 'https://api.uomg.com/api/image.lofter?format=images'
-      }, 300);
-    })
-    changeImg()
-  }, 3000)
+const getImage = async function () {
+  const result = await axios.get('http://localhost:6388/img', { params: { count: '10' } })
+  log('haha0', result)
 }
 
 const main = function () {
-  changeImg()
+  getImage()
 }
 
 main()
