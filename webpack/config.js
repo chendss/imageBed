@@ -31,6 +31,6 @@ module.exports = {
         usedExports: true
       }
     }
-    return null
+    return undefined
   }
 }
