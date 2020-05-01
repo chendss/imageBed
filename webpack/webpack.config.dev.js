@@ -23,6 +23,12 @@ module.exports = {
     filename: '[name].[hash].bundle.js',
     path: distPath,
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
+    extensions: ['*', '.js', '.vue', '.json'],
+  },
   optimization: config.optimization(ENV),
   mode: config.mode(ENV),
 }

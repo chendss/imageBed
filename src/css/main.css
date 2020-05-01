@@ -1,58 +1,145 @@
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'sans-serif';
-	background: url(https://api.uomg.com/api/image.lofter?format=images);
-	background-size: cover;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'sans-serif';
+  padding    : 0;
+  margin     : 0;
 }
+
 @font-face {
-	font-family: 'webfont_2';
-	src: url('./static/webfont_bar76uyhrpd.eot'); /* IE9*/
-	src: url('./static/webfont_bar76uyhrpd.eot?#iefix') format('embedded-opentype'),
-		/* IE6-IE8 */ url('./static/webfont_bar76uyhrpd.woff') format('woff'),
-		/* chrome、firefox */ url('./static/webfont_bar76uyhrpd.ttf') format('truetype'),
-		/* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('./static/webfont_bar76uyhrpd.svg#思源黑体-极细')
-			format('svg'); /* iOS 4.1- */
+  font-family: 'webfont_2';
+  src        : url('../static/webfont_bar76uyhrpd.eot');
+  /* IE9*/
+  src        : url('../static/webfont_bar76uyhrpd.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../static/webfont_bar76uyhrpd.woff') format('woff'),
+    /* chrome、firefox */
+    url('../static/webfont_bar76uyhrpd.ttf') format('truetype'),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../static/webfont_bar76uyhrpd.svg#思源黑体-极细') format('svg');
+  /* iOS 4.1- */
 }
+
 .text-center {
-	text-align: center;
+  text-align: center;
 }
+
 .text-white {
-	color: #fff;
+  color: #fff;
 }
+
 .header,
 .footer {
-	margin: 30px;
-	color: #fff;
+  margin: 30px;
+  color : #fff;
 }
+
 .title1 {
-	font-size: 20px;
+  font-size: 20px;
 }
+
 .title2 {
-	font-size: 24px;
-	font-family: 'webfont_2' !important;
+  font-size  : 24px;
+  font-family: 'webfont_2' !important;
 }
+
 .jumbotron {
-	margin: auto;
-	text-align: center;
-	background-color: rgba(255, 255, 255, 0.3);
+  margin          : auto;
+  text-align      : center;
+  background-color: rgba(255, 255, 255, 0.3);
 }
+
 .jumbotron input[type='file'] {
-	opacity: 0;
-	width: 102px;
-	height: 31px;
-	position: absolute;
-	display: inline-block;
+  opacity : 0;
+  width   : 102px;
+  height  : 31px;
+  position: absolute;
+  display : inline-block;
 }
+
 .preview {
-	color: #fff;
+  color: #fff;
 }
+
 .preview img {
-	max-width: 10%;
+  max-width: 10%;
 }
+
 .preview p {
-	word-break: break-all;
-	word-wrap: break-word;
-	font-size: 13px !important;
+  word-break: break-all;
+  word-wrap : break-word;
+  font-size : 13px !important;
 }
+
 .form-control:focus {
-	background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.background_img {
+  position       : absolute;
+  z-index        : -1;
+  opacity        : 0.7;
+  width          : 100%;
+  height         : 100%;
+  overflow       : hidden;
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+}
+
+@keyframes slideshow {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity          : 1;
+    -webkit-transform: scale(1.10);
+    transform        : scale(1.10);
+  }
+}
+
+.home-cover-img {
+  left                       : 0;
+  top                        : 0;
+  opacity                    : 0;
+  width                      : 100%;
+  height                     : 100%;
+  display                    : flex;
+  background-size            : cover;
+  display                    : block;
+  -webkit-backface-visibility: hidden;
+  backface-visibility        : hidden;
+  align-items                : center;
+  justify-content            : center;
+  position                   : absolute;
+  background-repeat          : no-repeat;
+  background-position        : center center;
+  -webkit-transform          : translateZ(0);
+}
+
+.home-cover-img.animate-in,
+.home-cover-img.animate-in--alt {
+  -webkit-animation-name           : slideshow;
+  animation-name                   : slideshow;
+  -webkit-animation-duration       : 10s;
+  animation-duration               : 10s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function        : linear;
+  -webkit-animation-fill-mode      : forwards;
+  animation-fill-mode              : forwards;
+}
+
+img {
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box !important;
+}
+
+.none {
+  display: none !important;
 }

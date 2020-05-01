@@ -56,16 +56,19 @@ const purifycss = function (env, distPath) {
   return []
 }
 
-const copyAction = function (env) {
-  let result = []
-  if (env === 'prod') {
-    result = [new CopyWebpackPlugin([
+const copyAction = function (env, distPath) {
+  let result = [
+    new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../src/static'),
         to: distPath + '/static'
       },
-    ])]
-  }
+      {
+        from: path.resolve(__dirname, '../src/css'),
+        to: distPath + '/css'
+      },
+    ])
+  ]
   return result
 }
 
@@ -82,7 +85,7 @@ module.exports = function (env, config, distPath) {
     }),
     new friendlyErrorsWebpackPlugin(),
     ...purifycss(env, distPath),
-    ...copyAction(env)
+    ...copyAction(env, distPath)
   ]
   return result
 }

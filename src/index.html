@@ -5,70 +5,19 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-		<link href="./main.css" rel="css" />
+		<link href="./css/main.css" rel="stylesheet" />
 		<title>整合第三方免费图床</title>
 	</head>
 
 	<body>
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12 header text-center">
-					<p class="title1">© 免费图床</p>
-					<p class="title2">少爷的图床</p>
-				</div>
-				<div class="col-md-8 col-xs-10 jumbotron" style="margin: auto;">
-					<div class="mselector">
-						<input type="file" accept="image/*" multiple />
-						<button type="button" class="btn btn-primary btn-sm">选择本地图片</button>
-						<button
-							type="button"
-							class="btn btn-primary btn-sm"
-							data-toggle="modal"
-							data-target="#url_upload_model"
-						>
-							上传远程图片
-						</button>
-					</div>
-					<hr />
-					<textarea
-						id="url-res-txt"
-						class="form-control"
-						rows="5"
-						placeholder="上传后的图片外链地址将显示在此处，下方会同时显示外链地址和预览图。"
-					></textarea>
-					<div class="preview">
-						<hr />
-					</div>
-					<span class="title1"
-						><b>温馨提示:</b>
-						本站不存储且无权管理上传的图源，图源均存放在新浪服务器，切勿上传违反法规图源，否则后果自负。</span
-					>
-				</div>
-				<div class="footer text-center">
-					<a target="_blank" class="title1">© 2019 Powered.</a>
-				</div>
+		<div class="background_img" id="id-bg-img">
+			<div class="home-cover-img animate-in">
+				<img sizes="cover" src="https://api.uomg.com/api/image.lofter?format=images" />
+				<img sizes="cover" src="https://api.uomg.com/api/image.lofter?format=images" />
 			</div>
-		</div>
-		<div
-			id="url_upload_model"
-			class="modal fade"
-			tabindex="-1"
-			role="dialog"
-			aria-labelledby="myModalLabel"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="myModalLabel">上传远程图片</h4>
-					</div>
-					<div class="modal-body">
-						<p class="lead">
-							请在下方输入远程图片地址~每行一个~
-						</p>
-						<textarea class="form-control" name="urls" rows="3" id="urls"></textarea>
-					</div>
-				</div>
+			<div class="home-cover-img none">
+				<img sizes="cover" src="https://api.uomg.com/api/image.lofter?format=images" />
+				<img sizes="cover" src="https://api.uomg.com/api/image.lofter?format=images" />
 			</div>
 		</div>
 	</body>

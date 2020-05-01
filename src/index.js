@@ -1,27 +1,10 @@
 import $ from 'jquery'
+import { qs } from '@/utils/index'
 import './styles/index.scss'
 
 console.log('hahah2')
 // var url = 'https://api.uomg.com/api/image.ali'
 var url = 'https://api.169740.com/api/image.ali'
-$(document).ready(function () {
-  $("input[type='file']").change(function (e) {
-    file_upload(this.files)
-  })
-  var obj = $('body')
-  obj.on('dragenter', function (e) {
-    e.stopPropagation()
-    e.preventDefault()
-  })
-  obj.on('dragover', function (e) {
-    e.stopPropagation()
-    e.preventDefault()
-  })
-  obj.on('drop', function (e) {
-    e.preventDefault()
-    file_upload(e.originalEvent.dataTransfer.files)
-  })
-})
 function file_upload (files) {
   if (files.length == 0) return alert('请选择图片文件！')
   for (var j = 0, len = files.length; j < len; j++) {
@@ -61,30 +44,24 @@ function file_upload (files) {
     })
   }
 }
-function url_upload () {
-  var urls = $('#urls').val()
-  if (urls == false) return alert('请输入图片链接！')
-  var UrlArr = urls.split('\n')
-  $('#url_upload_model').modal('hide')
-  for (var j = 0, len = UrlArr.length; j < len; j++) {
-    console.log(UrlArr[j])
-    $.getJSON(url, { imgurl: UrlArr[j] }, function (result, textStatus) {
-      if (result.code == 1) {
-        $('.preview').append(
-          '<div><img src="' +
-          result.imgurl +
-          '" ><code class="title1">' +
-          result.imgurl +
-          '</code></div>'
-        )
-      } else {
-        layer.open({
-          title: '错误',
-          content: '第' + j + '个图片上传失败',
-        })
-      }
-      console.log(result)
+
+const changeImg = function () {
+  setTimeout(() => {
+    const imgs = qs('#id-bg-img .home-cover-img')
+    imgs.forEach(img => {
+      img.classList.toggle('none')
+      img.classList.toggle('animate-in')
+      img.src = ''
+      setTimeout(() => {
+        img.src = 'https://api.uomg.com/api/image.lofter?format=images'
+      }, 300);
     })
-  }
-  console.log('test')
+    changeImg()
+  }, 3000)
 }
+
+const main = function () {
+  changeImg()
+}
+
+main()

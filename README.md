@@ -795,7 +795,7 @@ const purifycss = function (env, distPath) {
   return []
 }
 
-const copyAction = function (env) {
+const copyAction = function (env,distPath) {
   let result = []
   if (env === 'prod') {
     result = [new CopyWebpackPlugin([
@@ -821,7 +821,7 @@ module.exports = function (env, config, distPath) {
     }),
     new friendlyErrorsWebpackPlugin(),
     ...purifycss(env, distPath),
-    ...copyAction(env)
+    ...copyAction(env, distPath)
   ]
   return result
 }
