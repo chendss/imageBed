@@ -1,10 +1,10 @@
 import $ from 'jquery'
-import { qs, log } from '@/utils/index'
 import axios from 'axios'
 import './styles/index.scss'
+import config from '@/config'
+import { qs, log } from '@/utils/index'
 
 console.log('hahah2')
-// var url = 'https://api.uomg.com/api/image.ali'
 var url = 'https://api.169740.com/api/image.ali'
 function file_upload (files) {
   if (files.length == 0) return alert('请选择图片文件！')
@@ -47,8 +47,14 @@ function file_upload (files) {
 }
 
 const getImage = async function () {
-  const result = await axios.get('http://localhost:6388/img', { params: { count: '10' } })
+  const result = await axios.get('http://localhost:6388/img', { params: { count: '50' } })
   log('haha0', result)
+}
+
+const renderImg = function () {
+  setTimeout(() => {
+    renderImg()
+  }, 3000)
 }
 
 const main = function () {

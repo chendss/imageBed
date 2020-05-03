@@ -15,7 +15,9 @@ module.exports = {
   entry: path.resolve(__dirname, '../src/index.js'),
   devServer: {
     hot: true,
+    inline: true,
     hotOnly: true,
+    compress: true,
     port: config.port,
     contentBase: distPath,
   },
