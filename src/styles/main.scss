@@ -14,17 +14,23 @@
 
   .content-body {
     display        : flex;
-    padding-top    : 60*$cy_cyHd;
+    padding-top    : 56*$cy_cyHd;
     align-items    : center;
     justify-content: center;
 
     .upload-content {
       color          : #fff;
-      padding        : 16px;
+      padding        : 16*$cy_cyHd;
       display        : flex;
       justify-content: center;
       align-items    : center;
       flex-direction : column;
+      @include cy_cyRadius_lg();
+      z-index        : 1;
+      overflow       : hidden;
+      position       : relative;
+      backdrop-filter: blur(5px);
+      background     : rgba(0, 0, 0, 0.25);
 
       .upload-infos {
         .title {
@@ -45,7 +51,7 @@
       }
 
       .upload-btn {
-        margin-top: 4*$cy_cyHd;
+        margin-top: 8*$cy_cyHd;
         @include cy_cyRadius_sm();
         letter-spacing  : 2px;
         line-height     : 1.5;

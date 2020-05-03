@@ -94,9 +94,9 @@ $cy_cyColor_neutral_6: rgba(0, 0, 0, 0.1); //TODO:
 $cy_cyColor_neutral_7: rgba(0, 0, 0, 0.04); //TODO:
 
 //组件默认背景
-$cy_cyColor_neutral_8: #fff; //TODO:
+$cy_cyColor_neutral_8 : #fff; //TODO:
 //组件次要背景
-$cy_cyColor_neutral_9: rgba(255, 255, 255, 0.85); //TODO:
+$cy_cyColor_neutral_9 : rgba(255, 255, 255, 0.85); //TODO:
 //次要字色
 $cy_cyColor_neutral_10: rgba(255, 255, 255, 0.65); //TODO:
 //描述字色
@@ -160,6 +160,10 @@ $cy_cyColor_function_4: #29CC29; //TODO:
 }
 
 //圆角/Radius
+@mixin cy_cyRadius_lg {
+  border-radius: 4 * $cy_cyHd;
+}
+
 @mixin cy_cyRadius_sm {
   border-radius: 2 * $cy_cyHd;
 }

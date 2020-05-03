@@ -85,7 +85,7 @@ html {
 }
 
 .home-cover-img img {
-  filter: brightness(80%);
+  /* filter: brightness(80%); */
 }
 
 img {

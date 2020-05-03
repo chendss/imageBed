@@ -4,7 +4,7 @@ import { get, q, es, e } from '@/utils'
 
 class ImageControl {
   constructor() {
-    this.time = 8 * 1000
+    this.time = 6 * 1000
     this.imgList = []
     this.index = 0
     this.status = true
