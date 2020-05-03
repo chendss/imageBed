@@ -3,6 +3,8 @@ import math
 import json
 import pydash
 import os
+import requests
+import io
 
 
 def is_phone(ua):
@@ -59,11 +61,16 @@ def read_file(path):
         if exists_file(path) != True:
             wirte_file(path, {})
         with open(path, 'r', encoding='utf8') as f:
-            value = json.dumps({}) if f.read() == '' else f.read()
-            result = json.loads(value)
+            content = f.read()
+            if content == '':
+                print('2')
+                result = {}
+            else:
+                result = {}
+                result = json.loads(content)
         return result
     except BaseException as error:
-        print('读取文件失败', error)
+        print('读取文件失败', path, error)
         return {}
 
 
@@ -105,3 +112,18 @@ def get(obj, key, default_value=None):
         return result[0]
     else:
         return result
+
+
+def img_remote_size(url):
+    """
+    获得远程图片大小
+    """
+    try:
+        image = requests.get(url).content
+        image_b = io.BytesIO(image).read()
+        size = len(image_b)
+        result = size/1e3
+        return result
+    except BaseException as error:
+        print('远程大小失败', error, url)
+        return 0

@@ -1,0 +1,69 @@
+@import "./basic.scss";
+
+.content {
+  .header {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+
+    .auth {
+      color    : #fff;
+      font-size: 12*$cy_cyHd;
+    }
+  }
+
+  .content-body {
+    display        : flex;
+    padding-top    : 60*$cy_cyHd;
+    align-items    : center;
+    justify-content: center;
+
+    .upload-content {
+      color          : #fff;
+      padding        : 16px;
+      display        : flex;
+      justify-content: center;
+      align-items    : center;
+      flex-direction : column;
+
+      .upload-infos {
+        .title {
+          font-weight    : 800;
+          display        : flex;
+          justify-content: center;
+          font-size      : 27*$cy_cyHd;
+        }
+
+        .titps {
+          display        : flex;
+          justify-content: center;
+          align-items    : center;
+          text-align     : center;
+          font-size      : 12*$cy_cyHd;
+          text-shadow    : 1px 1px 2px rgba(0, 0, 0, .25);
+        }
+      }
+
+      .upload-btn {
+        margin-top: 4*$cy_cyHd;
+        @include cy_cyRadius_sm();
+        letter-spacing  : 2px;
+        line-height     : 1.5;
+        color           : #FFF;
+        align-items     : center;
+        justify-content : center;
+        background-color: #27AE61;
+        text-transform  : uppercase;
+        font-size       : 8*$cy_cyHd;
+        display         : inline-flex;
+        border          : 1px solid transparent;
+        padding         : 6*$cy_cyHd 16*$cy_cyHd;
+        cursor          : pointer;
+
+        &:hover {
+          background-color: #25A55C;
+        }
+      }
+    }
+  }
+}

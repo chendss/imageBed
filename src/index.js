@@ -3,8 +3,8 @@ import axios from 'axios'
 import './styles/index.scss'
 import config from '@/config'
 import { qs, log } from '@/utils/index'
+import ImageControl from './script/imageControl'
 
-console.log('hahah2')
 var url = 'https://api.169740.com/api/image.ali'
 function file_upload (files) {
   if (files.length == 0) return alert('请选择图片文件！')
@@ -46,19 +46,8 @@ function file_upload (files) {
   }
 }
 
-const getImage = async function () {
-  const result = await axios.get('http://localhost:6388/img', { params: { count: '50' } })
-  log('haha0', result)
-}
-
-const renderImg = function () {
-  setTimeout(() => {
-    renderImg()
-  }, 3000)
-}
-
-const main = function () {
-  getImage()
+const main = async function () {
+  const imgControl = await ImageControl.new()
 }
 
 main()

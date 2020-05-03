@@ -302,7 +302,15 @@ export const iframeRequest = function (url, wait) {
   })
 }
 
-export const q = s => document.querySelector(s)
+/**
+* 选中元素
+*
+* @param {string} s
+* @returns {HTMLElement}
+*/
+export const q = function (s) {
+  return document.querySelector(s)
+}
 
 export const qs = s => [...document.querySelectorAll(s)]
 
