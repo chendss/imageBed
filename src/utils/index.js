@@ -7,6 +7,35 @@ export const log = function () {
   console.log(...arguments)
 }
 
+/**
+ * 对象转表单数据
+ *
+ * @param {*} obj
+ * @returns
+ */
+export const objToFormData = function (obj) {
+  const source = obj || {}
+  const formData = new FormData()
+  for (let [name, val] of Object.entries(source)) {
+    formData.append(name, val)
+  }
+  return formData
+}
+
+/**
+ * 不会报错的json parse
+ *
+ * @param {*} obj
+ * @returns
+ */
+export const jsonpParse = function (obj) {
+  try {
+    return JSON.parse(obj)
+  } catch (error) {
+    return obj
+  }
+}
+
 
 export const toArray = function (source) {
   let result = []
@@ -139,8 +168,8 @@ export const createScriptFormRemote = function (srcDict) {
   for (let key of Object.keys(srcDict)) {
     if (document.querySelector(`#${key}`) == null) {
       const src = srcDict[key]
-      const script = document.createElement("script")
-      script.type = "text/javascript"
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
       script.src = src
       script.id = key
       document.head.appendChild(script)
@@ -193,13 +222,13 @@ export const sleep = async function (time) {
 }
 
 export const openLoading = function () {
-  const loading = document.querySelector("#loading")
-  loading.classList.remove("none")
+  const loading = document.querySelector('#loading')
+  loading.classList.remove('none')
 }
 
 export const closeLoading = function () {
-  const loading = document.querySelector("#loading")
-  loading.classList.add("none")
+  const loading = document.querySelector('#loading')
+  loading.classList.add('none')
 }
 
 /**
@@ -265,7 +294,7 @@ export const jsonParse = function (obj) {
 */
 export const textToDom = function (data) {
   const p = new DOMParser()
-  const Html = p.parseFromString(data, "text/html")
+  const Html = p.parseFromString(data, 'text/html')
   return Html
 }
 
@@ -361,7 +390,7 @@ export const average = function (list) {
 */
 export const isMobile = function () {
   let info = navigator.userAgent
-  let agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPod", "iPad"]
+  let agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPod', 'iPad']
   for (let i = 0; i < agents.length; i++) {
     if (info.indexOf(agents[i]) >= 0) return true
   }

@@ -73,7 +73,12 @@
     &[size="sm"] {
       padding: 0 8px;
       height : 12*$cy_cyHd;
+    }
 
+    &[size="lg"] {
+      padding   : 0 12px;
+      min-height: 16*$cy_cyHd;
+      font-size : 16px;
     }
   }
 

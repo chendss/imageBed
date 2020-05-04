@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 		<link href="./css/main.css" rel="stylesheet" />
+		<link href="./css/notyf.min.css" rel="stylesheet" />
 		<title>整合第三方免费图床</title>
 	</head>
 
@@ -15,6 +16,12 @@
 				<img
 					sizes="cover"
 					src="https://hualigs.yunjiexi.club/content/images/system/home_cover_1549948837401_3e0e76.jpg"
+				/>
+			</div>
+			<div class="home-cover-img empty">
+				<img
+					sizes="cover"
+					src="https://hualigs.yunjiexi.club/content/images/system/home_cover_1549948747928_0f7f63.jpg"
 				/>
 			</div>
 		</div>
@@ -33,10 +40,27 @@
 							<br />
 							图片外链服务 稳定不掉线 免费使用
 						</div>
-					</div>
-					<button class="upload-btn">开始上传</button>
+          </div>
+          <div class="upload-btn" id="id-upload-btn">
+            <input type="file" id="id-input-upload"></input>
+            开始上传
+          </div>
 				</div>
 			</div>
-		</div>
+    </div>
+    <div class="type-btn-box">
+      <button class="cy_btn" type="p" size="lg" id="id-type-btn">
+        <div id="id-drop" class="dropdown-content none" >
+          <div class="drop-btn cy_btn" urltype="oss">阿里云</div>
+          <div class="drop-btn cy_btn" urltype="baidu">百度识图</div>
+          <div class="drop-btn cy_btn" urltype="qihu">360图床</div>
+          <div class="drop-btn cy_btn" urltype="weibo">新浪图床</div>
+          <div class="drop-btn cy_btn" urltype="juejin">掘金图床</div>
+          <div class="drop-btn cy_btn" urltype="sousou">搜狗图床</div>
+          <div class="drop-btn cy_btn" urltype="jd">京东图床</div>
+        </div>
+        选择图床类型
+      </button>
+    </div>
 	</body>
 </html>

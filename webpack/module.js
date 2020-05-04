@@ -10,7 +10,7 @@ const cssLoader = function (env) {
 const styleLoader = function (env) {
   return [
     {
-      test: /\.scss|scss|css$/,
+      test: /\.(scss|scss|css)$/,
       exclude: /node_modules/,
       use: [
         ...cssLoader(env),

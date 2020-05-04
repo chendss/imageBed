@@ -73,15 +73,11 @@ html {
 }
 
 .home-cover-img.animate-in {
-  z-index                          : 99;
-  -webkit-animation-name           : slideshow;
-  animation-name                   : slideshow;
-  -webkit-animation-duration       : 6s;
-  animation-duration               : 6s;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function        : linear;
-  -webkit-animation-fill-mode      : forwards;
-  animation-fill-mode              : forwards;
+  z-index                  : 99;
+  animation-name           : slideshow;
+  animation-duration       : 6s;
+  animation-timing-function: linear;
+  animation-fill-mode      : forwards;
 }
 
 .home-cover-img img {
@@ -108,4 +104,21 @@ img {
 .empty {
   opacity: 0;
   z-index: -1;
+}
+
+.type-btn-box {
+  position: absolute;
+  left    : 16px;
+  top     : 16px;
+}
+
+.cy_btn {
+  position: relative;
+  height  : 50px;
+  width   : 160px;
+}
+
+.cy_btn .dropdown-content {
+  top     : 52px;
+  position: absolute;
 }
