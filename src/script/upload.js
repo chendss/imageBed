@@ -2,17 +2,18 @@ import BaseUpload from './baseUpload'
 import { log, objToFormData } from '@/utils'
 import { PostXhr } from '@/utils/baseRequest'
 
+
 class UploadFile extends BaseUpload {
   constructor() {
     super()
     this.dict = {
+      jd: 'https://api.uomg.com/api/image.jd',
+      qihu: 'https://api.uomg.com/api/image.360',
       oss: 'https://api.169740.com/api/image.ali',
       sousou: 'https://api.uomg.com/api/image.sogou',
-      baidu: 'https://api.169740.com/api/image.baidu',
-      qihu: 'https://api.uomg.com/api/image.360',
-      weibo: 'https://api.169740.com/api/image.sina',
+      weibo: 'https://api.uomg.com/api/image.sina',
+      baidu: 'https://api.uomg.com/api/image.baidu',
       juejin: 'https://api.uomg.com/api/image.juejin',
-      jd: 'https://api.169740.com/api/image.jd',
     }
     this.type = 'oss'
   }

@@ -50,10 +50,11 @@
     }
 
     &[d="true"] {
-      cursor    : not-allowed;
-      color     : $cy_cyColor_neutral_4;
-      background: $cy_cyColor_neutral_7;
-      border    : 1px solid $cy_cyColor_neutral_5;
+      cursor        : not-allowed;
+      pointer-events: none;
+      color         : $cy_cyColor_neutral_4;
+      background    : $cy_cyColor_neutral_7;
+      border        : 1px solid $cy_cyColor_neutral_5;
     }
 
     &[type="p"] {
