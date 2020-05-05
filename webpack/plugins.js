@@ -84,7 +84,7 @@ module.exports = function (env, config, distPath) {
       generateStatsFile: true, // 是否生成stats.json文件 }),
     }),
     new friendlyErrorsWebpackPlugin(),
-    ...purifycss(env, distPath),
+    // ...purifycss(env, distPath),
     ...copyAction(env, distPath)
   ]
   return result
