@@ -6,6 +6,12 @@
 
 本项目旨在整个互联网的免费的图床，整合上传, 也借此项目使用 webpack4 从零搭建一个项目，看此文的朋友我希望你拥有基础的 webpack 相关知识，包括但不限于 如何初始化一个项目、npm 是什么、yarn 是什么、webpack 基本配置、前端模块化，现在正文开始。
 
+项目截图
+
+![](https://ae01.alicdn.com/kf/H984d1a6538ae458b90581faf7186cbbb8.jpg)
+
+![](https://ae01.alicdn.com/kf/H123951533418458e91e0f8e7b40af5258.png)
+
 ## 一、webpack 理论
 
 ### 1、webpack 是个啥

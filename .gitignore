@@ -1,3 +1,4 @@
 node_modules/
 dist/
 serve/__pycache__/
+src/config/index.js
