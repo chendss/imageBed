@@ -110,6 +110,7 @@ img {
   position: absolute;
   left    : 16px;
   top     : 16px;
+  z-index : 9999;
 }
 
 .cy_btn {
