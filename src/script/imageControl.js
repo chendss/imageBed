@@ -23,7 +23,7 @@ class ImageControl {
     const data = uniq(get(res, 'data', []))
     const bg = q('#id-bg-img')
     this.imgList = shuffle(data)
-    const htmlList = data.map(url => {
+    const htmlList = this.imgList.map(url => {
       const html = `
         <div class="home-cover-img empty">
           <img
