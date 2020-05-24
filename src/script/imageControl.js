@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { uniq } from 'lodash'
+import { uniq, shuffle } from 'lodash'
 import { get, q, es, e } from '@/utils'
 
 class ImageControl {
@@ -22,7 +22,7 @@ class ImageControl {
     const res = await axios.get('/img', { params: { count: this.num } })
     const data = uniq(get(res, 'data', []))
     const bg = q('#id-bg-img')
-    this.imgList = data
+    this.imgList = shuffle(data)
     const htmlList = data.map(url => {
       const html = `
         <div class="home-cover-img empty">
