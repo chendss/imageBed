@@ -52,7 +52,7 @@
 	"dependencies": {
 		"axios": "^0.19.2",
 		"jquery": "^3.5.0",
-		"lodash": "^4.17.15",
+		"lodash": "^4.17.19",
 		"micromodal": "^0.4.6",
 		"nedb": "^1.8.0",
 		"notyf": "^3.6.0"
