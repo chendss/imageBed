@@ -50,7 +50,7 @@
 		"webpack-parallel-uglify-plugin": "^1.1.2"
 	},
 	"dependencies": {
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"jquery": "^3.5.0",
 		"lodash": "^4.17.15",
 		"micromodal": "^0.4.6",
